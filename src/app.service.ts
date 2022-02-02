@@ -35,6 +35,11 @@ export class AppService {
     return this.usersRepository.save(user); // Update
   }
 
+  async deleteUser(id: number): Promise<User> {
+    const user = await this.getOneById(id);
+    return this.usersRepository.remove(user);
+  }
+
   getHello(): string {
     return 'Hello World!';
   }
