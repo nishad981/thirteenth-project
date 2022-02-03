@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { Pet } from './pet.entity';
+import { CreatePostDto } from './create-post.dto';
 
 @Injectable()
 export class AppService {
@@ -27,6 +28,12 @@ export class AppService {
   }
 
   createUser(name: string): Promise<User> {
+    const newUser = this.usersRepository.create({ name }); //const newUser = new User(); / newUser.name = name;
+
+    return this.usersRepository.save(newUser);
+  }
+
+  createUserDto(name: CreatePostDto): Promise<User> {
     const newUser = this.usersRepository.create({ name }); //const newUser = new User(); / newUser.name = name;
 
     return this.usersRepository.save(newUser);
