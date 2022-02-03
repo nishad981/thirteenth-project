@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import { Pet } from './pet.entity';
 
 @Injectable()
 export class AppService {
@@ -10,7 +11,9 @@ export class AppService {
   ) {}
 
   getAll(): Promise<User[]> {
-    return this.usersRepository.find(); //SELECT * from User
+    return this.usersRepository.find({
+      relations: ['pets'], // SELECT * FROM user JOIN pets
+    });
   }
 
   async getOneById(id: number): Promise<User> {
