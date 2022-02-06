@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { Pet } from './pet.entity';
 import { CreatePostDto } from './create-post.dto';
+import { getConnection } from 'typeorm';
 
 @Injectable()
 export class AppService {
@@ -33,10 +34,17 @@ export class AppService {
     return this.usersRepository.save(newUser);
   }
 
-  createUserDto(name: CreatePostDto): Promise<User> {
-    const newUser = this.usersRepository.create({ name }); //const newUser = new User(); / newUser.name = name;
+  //Insert using DTO
+  createUserDto(name: CreatePostDto): Promise<User[]> {
+    let n: string = name.nameOfDto;
+    const newUser = this.usersRepository.create(n); //const newUser = new User(); / newUser.name = name;
 
     return this.usersRepository.save(newUser);
+  }
+
+  //Insert using DTO #TypeORM Query Builder
+  async createUserDto2(name:CreatePostDto):Promise<User> {
+    return await this.usersRepository.save(name);
   }
 
   async updateUser(id: number, name: string): Promise<User> {

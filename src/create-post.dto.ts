@@ -1,3 +1,3 @@
 export class CreatePostDto {
-  name: string;
+  nameOfDto: string;
 }
